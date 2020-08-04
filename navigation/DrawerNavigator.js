@@ -8,6 +8,7 @@ import OrdersScreen from "../screens/shop/OrderScreen";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Platform } from "react-native";
+import UserProductsNavigator from "./UserProductsNavigator";
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -50,6 +51,29 @@ function DrawerNavigation() {
 						drawerIcon: (drawerConfig) => (
 							<Ionicons
 								name={Platform.OS === "android" ? "md-list" : "ios-list"}
+								size={23}
+								color={drawerConfig.color}
+							/>
+						),
+					})}
+				/>
+				<DrawerNavigator.Screen
+					name="UserProducts"
+					component={UserProductsNavigator}
+					options={() => ({
+						title: "Your Orders",
+						headerLeft: () => (
+							<HeaderButtons HeaderButtonComponent={HeaderButton}>
+								<Item
+									title="Menu"
+									iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
+									onPress={() => props.navigation.toggleDrawer()}
+								/>
+							</HeaderButtons>
+						),
+						drawerIcon: (drawerConfig) => (
+							<Ionicons
+								name={Platform.OS === "android" ? "md-create" : "ios-create"}
 								size={23}
 								color={drawerConfig.color}
 							/>
