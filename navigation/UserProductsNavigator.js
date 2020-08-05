@@ -7,6 +7,7 @@ import Colors from "../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/UI/HeaderButton";
 import UserProductsScreen from "../screens/user/UserProductScreen";
+import EditProductScreen from "../screens/user/EditProductScreen";
 
 const AdminNavigator = createStackNavigator();
 
@@ -40,6 +41,24 @@ function UserProductNavigator() {
 							/>
 						</HeaderButtons>
 					),
+					headerRight: () => (
+						<HeaderButtons HeaderButtonComponent={HeaderButton}>
+							<Item
+								title="Add"
+								iconName={
+									Platform.OS === "android" ? "md-create" : "ios-create"
+								}
+								onPress={() => props.navigation.navigate("EditProducts")}
+							/>
+						</HeaderButtons>
+					),
+				})}
+			/>
+			<AdminNavigator.Screen
+				name="EditProducts"
+				component={EditProductScreen}
+				options={(props) => ({
+					title: "Edit Your Product",
 				})}
 			/>
 		</AdminNavigator.Navigator>

@@ -61,11 +61,11 @@ function DrawerNavigation() {
 					name="UserProducts"
 					component={UserProductsNavigator}
 					options={() => ({
-						title: "Your Orders",
+						title: "Admin",
 						headerLeft: () => (
 							<HeaderButtons HeaderButtonComponent={HeaderButton}>
 								<Item
-									title="Menu"
+									title="Admin"
 									iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
 									onPress={() => props.navigation.toggleDrawer()}
 								/>
