@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,10 +9,12 @@ import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Platform } from "react-native";
 import UserProductsNavigator from "./UserProductsNavigator";
+import AuthNavigator from "./AuthNavigator";
 
 const DrawerNavigator = createDrawerNavigator();
 
 function DrawerNavigation() {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	return (
 		<NavigationContainer>
 			<DrawerNavigator.Navigator
@@ -20,66 +22,81 @@ function DrawerNavigation() {
 					activeTintColor: Colors.primary,
 				}}
 			>
-				<DrawerNavigator.Screen
-					name="ShopNavigator"
-					component={ShopNavigator}
-					options={() => ({
-						title: "Products",
-						drawerIcon: (drawerConfig) => (
-							<Ionicons
-								name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
-								size={23}
-								color={drawerConfig.color}
-							/>
-						),
-					})}
-				/>
-				<DrawerNavigator.Screen
-					name="OrdersNavigator"
-					component={OrdersNavigator}
-					options={() => ({
-						title: "Your Orders",
-						headerLeft: () => (
-							<HeaderButtons HeaderButtonComponent={HeaderButton}>
-								<Item
-									title="Menu"
-									iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
-									onPress={() => props.navigation.toggleDrawer()}
-								/>
-							</HeaderButtons>
-						),
-						drawerIcon: (drawerConfig) => (
-							<Ionicons
-								name={Platform.OS === "android" ? "md-list" : "ios-list"}
-								size={23}
-								color={drawerConfig.color}
-							/>
-						),
-					})}
-				/>
-				<DrawerNavigator.Screen
-					name="UserProducts"
-					component={UserProductsNavigator}
-					options={() => ({
-						title: "Admin",
-						headerLeft: () => (
-							<HeaderButtons HeaderButtonComponent={HeaderButton}>
-								<Item
-									title="Admin"
-									iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
-									onPress={() => props.navigation.toggleDrawer()}
-								/>
-							</HeaderButtons>
-						),
-						drawerIcon: (drawerConfig) => (
-							<Ionicons
-								name={Platform.OS === "android" ? "md-create" : "ios-create"}
-								size={23}
-								color={drawerConfig.color}
-							/>
-						),
-					})}
-				/>
+				{isLoggedIn ? (
+					<>
+						<DrawerNavigator.Screen
+							name="ShopNavigator"
+							component={ShopNavigator}
+							options={() => ({
+								title: "Products",
+								drawerIcon: (drawerConfig) => (
+									<Ionicons
+										name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+										size={23}
+										color={drawerConfig.color}
+									/>
+								),
+							})}
+						/>
+						<DrawerNavigator.Screen
+							name="OrdersNavigator"
+							component={OrdersNavigator}
+							options={() => ({
+								title: "Your Orders",
+								headerLeft: () => (
+									<HeaderButtons HeaderButtonComponent={HeaderButton}>
+										<Item
+											title="Menu"
+											iconName={
+												Platform.OS === "android" ? "md-menu" : "ios-menu"
+											}
+											onPress={() => props.navigation.toggleDrawer()}
+										/>
+									</HeaderButtons>
+								),
+								drawerIcon: (drawerConfig) => (
+									<Ionicons
+										name={Platform.OS === "android" ? "md-list" : "ios-list"}
+										size={23}
+										color={drawerConfig.color}
+									/>
+								),
+							})}
+						/>
+						<DrawerNavigator.Screen
+							name="UserProducts"
+							component={UserProductsNavigator}
+							options={() => ({
+								title: "Admin",
+								headerLeft: () => (
+									<HeaderButtons HeaderButtonComponent={HeaderButton}>
+										<Item
+											title="Admin"
+											iconName={
+												Platform.OS === "android" ? "md-menu" : "ios-menu"
+											}
+											onPress={() => props.navigation.toggleDrawer()}
+										/>
+									</HeaderButtons>
+								),
+								drawerIcon: (drawerConfig) => (
+									<Ionicons
+										name={
+											Platform.OS === "android" ? "md-create" : "ios-create"
+										}
+										size={23}
+										color={drawerConfig.color}
+									/>
+								),
+							})}
+						/>
+					</>
+				) : (
+					<>
+						<DrawerNavigator.Screen name="Auth" component={AuthNavigator} />
+					</>
+				)}
+
 				{/* <DrawerNavigator.Screen name="Cart" component={CartScreen} /> */}
 			</DrawerNavigator.Navigator>
 		</NavigationContainer>
